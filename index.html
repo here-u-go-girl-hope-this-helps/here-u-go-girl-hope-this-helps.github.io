@@ -1,12 +1,199 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Page Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Until Wednesday ❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #100e18;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: #a855f7;
+      filter: blur(180px);
+      opacity: 0.15;
+      border-radius: 50%;
+      top: -200px;
+      left: -150px;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 650px;
+      text-align: center;
+      padding: 40px 20px;
+      z-index: 1;
+    }
+
+    .heart {
+      font-size: 42px;
+      margin-bottom: 25px;
+      animation: heartbeat 1.8s infinite;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #aaa2b8;
+      font-size: 1rem;
+      margin-bottom: 45px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .unit {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 25px 5px;
+      backdrop-filter: blur(10px);
+    }
+
+    .number {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 700;
+      color: #e9b8ff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      color: #aaa2b8;
+      font-size: 0.8rem;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #766e83;
+      font-size: 0.9rem;
+    }
+
+    .finished {
+      font-size: 2rem;
+      color: #e9b8ff;
+      margin-top: 30px;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.2); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
+    }
+
+    @media (max-width: 450px) {
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .unit {
+        padding: 20px 5px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+  <div class="glow"></div>
+
+  <main class="container">
+    <div class="heart">❤️</div>
+
+    <h1>Until Wednesday</h1>
+    <p class="subtitle">Every second brings us closer.</p>
+
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <div class="number" id="days">0</div>
+        <div class="label">Days</div>
+      </div>
+
+      <div class="unit">
+        <div class="number" id="hours">00</div>
+        <div class="label">Hours</div>
+      </div>
+
+      <div class="unit">
+        <div class="number" id="minutes">00</div>
+        <div class="label">Minutes</div>
+      </div>
+
+      <div class="unit">
+        <div class="number" id="seconds">00</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Wednesday, November 18 · 18:33 · Finland 🇫🇮
+    </div>
+
+    <div id="finished" class="finished" hidden>
+      The moment is here. ❤️
+    </div>
+  </main>
+
+  <script>
+    // November 18, 2026 at 18:33 Finnish time
+    const target = new Date("2026-11-18T18:33:00+02:00").getTime();
+
+    function updateCountdown() {
+      const now = Date.now();
+      const difference = target - now;
+
+      if (difference <= 0) {
+        document.getElementById("countdown").hidden = true;
+        document.getElementById("finished").hidden = false;
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 
 </body>
 </html>
